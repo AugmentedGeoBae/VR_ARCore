@@ -17,9 +17,13 @@
 			import * as THREE from '../build/three.module.js';
 			import { ARButton } from './jsm/webxr/ARButton.js';
 
+			import { StereoEffect } from './jsm/effects/StereoEffect.js';
+
 			var container;
 			var camera, scene, renderer;
 			var controller;
+
+			var effect;
 
 			init();
 			animate();
@@ -41,7 +45,11 @@
 
 				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				effect = new StereoEffect( renderer );
+				effect.setSize( window.innerWidth, window.innerHeight );
+
+//				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.xr.enabled = true;
 				container.appendChild( renderer.domElement );
 
@@ -78,7 +86,8 @@
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+//				renderer.setSize( window.innerWidth, window.innerHeight );
+				effect.setSize( window.innerWidth, window.innerHeight );
 
 			}
 
@@ -92,7 +101,8 @@
 
 			function render() {
 
-				renderer.render( scene, camera );
+//				renderer.render( scene, camera );
+				effect.render( scene, camera );
 
 			}
 
